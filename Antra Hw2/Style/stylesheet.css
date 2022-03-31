@@ -1,0 +1,62 @@
+.container {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/*customization of rows */
+.row-nav, .row-header, .row-section, .row-footer {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    margin: auto;
+}
+
+.row-section {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav {
+    background-color: #000;
+    color: white;
+    
+}
+
+header {
+    background-color: #c6bfbf;
+}
+
+
+footer {
+    justify-content: space-between;
+    background-color: #0b4d14;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+}
+
+/*customization of Columns for displaying more items on one row */
+.col {
+    width: 100%;
+}
+
+.col-left {
+    width: 100%;
+}
+
+.col-right {
+    width: 100%;
+    text-align: right;
+}
+
+li {
+    display: inline;
+    padding: 0 15px 0 0;
+}
