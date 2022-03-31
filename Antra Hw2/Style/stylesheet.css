@@ -7,7 +7,7 @@
 }
 
 /*customization of rows */
-.row-nav, .row-header, .row-section, .row-footer {
+.row-nav, .row-header, .row-footer {
     display: flex;
     justify-content: center;
     width: 80%;
@@ -15,9 +15,15 @@
 }
 
 .row-section {
-    padding: 10px;
     display: flex;
     justify-content: space-between;
+    padding: 10px;
+    width: 80%;
+    margin: auto;
+}
+
+.row-section p{
+    margin: 10px;
 }
 
 nav {
@@ -54,6 +60,10 @@ footer {
 .col-right {
     width: 100%;
     text-align: right;
+}
+
+ul {
+    list-style: none;
 }
 
 li {
