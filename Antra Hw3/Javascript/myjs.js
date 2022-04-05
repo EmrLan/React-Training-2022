@@ -463,18 +463,61 @@ function generateRanChar(len){
 // Problem 21
 // Write a JavaScript function to get all possible subset with a fixed length (for example 2) combinations in an array. 
 
-// function getSubset(array, subsetLength){
-//     var result = [];
-//     var arrTemp = [];    
+// function getSubset(array, len){
 
-//     for(let i = 0; i < array.length; i++)
+//     var arrStr = array.join("");
+//     var str1 = "";
+//     var str2 = "";
+//     var result = [];
+
+//     // for(var i = 0; i < arrStr.length; i++)
+//     // {
+//     //     for(var j = i; j < arrStr.length; j++)
+//     //     {
+//     //         str += arrStr[j]
+//     //         arrayStr.push(str);
+//     //     }
+//     //     var str = "";
+//     // }
+
+//     // for(var i = (arrStr.length - 1); i > -1; i--)
+//     // {
+//     //     for(var j = i; j > -1; j--)
+//     //     {
+//     //         str += arrStr[j]
+//     //         arrayStr.push(str);
+//     //     }
+//     //     var str = "";
+//     // }
+
+//     var cur = 0;
+
+//     for(var i = 0; (i + len) < arrStr.length; i++)
 //     {
-//         if(arrTemp)
+//         cur = (i + len) - 1;
+//         while(cur > i)
+//         {
+//             for(var k = i; k < cur; k++)
+//             {
+//                 str1 += arrStr[k];
+//             }
+//             console.log(str);
+//             for(var j = cur; j < arrStr.length; j++)
+//             {
+//                 str2 = str1 + arrStr[j];
+//                 if(str2.length === len && !(result.includes(str2)))
+//                     result.push(str2);
+                
+//             }
+//             str = "";
+//             cur--;
+//         }
 //     }
+
 //     return result;
 // }
 
-// console.log( getSubset([2, 8, 5, 6], 2) );
+console.log( getSubset([1, 2, 3, 4], 3) );
 
 
 // Problem 22
@@ -500,23 +543,146 @@ function numOccurenceLetter (str, letter)
 // Problem 23
 // Write a JavaScript function to find the first not repeated character. 
 
-// function firstNonRepeatedChar (str)
-// {
-//     var obj = {};
-//     for(var i = 0; i < str.length; i++)
-//     {
-//         if( obj[str[i]] )
-//             obj[str[i]] += 1;
-//         else
-//             obj[str[i]] = 1;
-//     }
+function firstNonRepeatedChar (str)
+{
+    var obj = {};
+    for(var i = 0; i < str.length; i++)
+    {
+        if( obj[str[i]] )
+            obj[str[i]] += 1;
+        else
+            obj[str[i]] = 1;
+    }
 
-//     for(let i in obj)
-//     {
-//         if(obj)
-//     }
+    //console.log(obj);
+    for(let i in obj)
+    {
+        //console.log(`${i}` + " " + `${obj[i]}`)
+        if( parseInt(`${obj[i]}`) === 1)
+            return `${i}`
+    }
 
-//     return obj;
-// }
+    return none;
+}
 
-// console.log( firstNonRepeatedChar("abacddbec") );
+//console.log( firstNonRepeatedChar("asdfdfahsdbsdadsasdfdsdfasdasdsgfhsagqwergasvearfg") );
+
+// Problem 24
+// Write a JavaScript function to apply Bubble Sort algorithm.
+
+function bubbleSort(array, order)
+{
+    var temp = 0;
+    if(order === 0)
+        for(var i = array.length; i > 0; i--)
+        {
+            for(var j = 0; j < i; j++)
+            {
+                if( array[j] > array[j+1])
+                {
+                    temp = array[j+1];
+                    array[j+1] = array[j];
+                    array[j] = temp;
+                }
+            }
+        }
+    else
+        for(var i = -1; i < array.length; i++)
+        {
+            for(var j = (array.length - 1); j > i; j--)
+            {
+                if( array[j] > array[j-1])
+                {
+                    temp = array[j-1];
+                    array[j-1] = array[j];
+                    array[j] = temp;
+                }
+            }
+        }
+    return array;
+}
+// ascending order = 0, descending order = 1
+//console.log( bubbleSort( [12, 345, 4, 546, 122, 84, 98, 64, 9, 1, 3223, 455, 23, 234, 213], 0) )
+
+// Problem 25
+// Write a JavaScript function that accept a list of country names as input and returns the longest country name as output.
+
+function longestName (arrName){
+    let big = "";
+    for(var i = 0; i < arrName.length; i++)
+    {
+        if( (big.length) < ((arrName[i]).length) )
+            big = arrName[i];
+    }
+    return big;
+}
+
+//console.log( longestName(["Australia", "Germany", "United States of America"]) );
+
+
+// Problem 26
+// Write a JavaScript function to find longest substring in a given a string without repeating characters.
+
+function longSubstring(str){
+    str = str.toLowerCase();
+    var result = "";
+    for(var i = 0; i < str.length; i++)
+    {
+        if(!(result.includes(str[i])))
+            result += str[i]
+    }
+    return result;
+}
+
+//console.log( longSubstring("Madam") )
+
+// Problem 27
+// Write a JavaScript function that returns the longest palindrome in a given string.
+
+function longPalindrome(str)
+{
+    var strArr = combinationString(str);
+    var resArr = [];
+    //console.log(strArr);
+
+    for(var i = 0; i < strArr.length; i++)
+    {
+        if( palindrome(strArr[i]) )
+        {
+            if( resArr.length === 0)
+                resArr.push(strArr[i]);
+            else{
+                if( (resArr[0]).length < (strArr[i]).length )
+                {
+                    resArr = [];
+                    resArr.push(strArr[i]);
+                }
+                else if((resArr[0]).length === (strArr[i]).length)
+                {
+                    resArr.push(strArr[i]);
+                }
+            }
+        }
+    }
+
+    return resArr;
+}
+
+
+//console.log( longPalindrome("book") )
+
+// Problem 28 
+// Write a JavaScript program to pass a 'JavaScript function' as parameter.
+// Problem 29
+// Write a JavaScript function to get the function name.
+
+function getFuntionName (func)
+{
+    var str = ((String(func)).split(" "))[1];
+    str = (str.split("("))[0];
+    return str;
+}
+
+//console.log( getFuntionName(longSubstring) );
+
+
