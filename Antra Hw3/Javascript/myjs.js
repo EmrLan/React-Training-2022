@@ -303,5 +303,220 @@ function exponent(b,n)
 
 //console.log(exponent(8,2));
 
+// Problem 16
+// Write a JavaScript function to extract unique characters from a string.
+
+function uniqueChar(input)
+{
+    var obj = {};
+    var str = ""
+    for(var i = 0; i < input.length; i++)
+    {
+        if(! (obj[input[i]]) )
+        {
+            obj[input[i]] = 1;
+            str += input[i];
+        }
+    }
+
+    return str;
+}
+
+//console.log( uniqueChar("thequickbrownfoxjumpsoverthelazydog") );
+
 // Problem 17
-// 
+// Write a JavaScript function to get the number of occurrences of each letter in specified string. 
+
+function numOccurences(input)
+{
+    var obj = {}
+    for(var i = 0; i < input.length; i++)
+    {
+        if(obj[input[i]])
+        {
+            obj[input[i]] += 1;
+        }
+        else
+        {
+            obj[input[i]] = 1;
+        }
+    }
+
+    return obj;
+}
+
+//console.log( numOccurences("madam") );
+
+
+// Problem 18
+// Write a function for searching JavaScript arrays with a binary search.
+
+function binarySearch (array, value)
+{
+    array = array.sort( function (a,b) { return a - b} )
+    console.log(array);
+
+    var half = parseInt((array.length) / 2);
+    var max = array.length;
+    var min = 0;
+
+    while(1)
+    {
+        //console.log("Min = " + min + " Half = " + half + " Max = " + max);
+        if(array[half] === value)
+        {
+            return true;
+        }
+        else if((array[half] < value) && ((max - min) > 1) )
+        {
+            min = half + 1;
+            half = parseInt( (min + max) / 2);
+        }
+        else if(array[half] > value && ((max - min) > 1))
+        {
+            max = half - 1;
+            half = parseInt( (min + max) / 2 );
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+}
+
+//console.log( binarySearch([2, 8, 5, 6, 12, 56, 41, 13, 62, 59, 26, 78, 100, 65, 17], 2 ));
+
+// Problem 19
+// Write a JavaScript function that returns array elements larger than a number
+
+function largerNum (array, value)
+{
+    array = array.sort( function (a,b) { return a - b} )
+    console.log(array);
+
+    var half = parseInt((array.length) / 2);
+    var max = array.length;
+    var min = 0;
+
+    var output = [];
+    var isDone = false;
+
+    while(!isDone)
+    {
+        //console.log("Min = " + min + " Half = " + half + " Max = " + max);
+        if((array[half] < value) && ((max - min) > 1) )
+        {
+            min = half + 1;
+            half = parseInt( (min + max) / 2);
+        }
+        else if(array[half] > value && ((max - min) > 1))
+        {
+            max = half - 1;
+            half = parseInt( (min + max) / 2 );
+        }
+        else
+        {
+            if(array[half] <= value)
+            {
+                half += 1;
+            }
+            isDone = true;
+        }
+    }
+
+    for( var i = half; i < array.length; i++)
+    {
+        output.push( array[i] );
+    }
+
+    return output;    
+}
+
+//console.log( largerNum([2, 8, 5, 6, 12, 56, 41, 13, 62, 59, 26, 78, 100, 65, 17], 50 ));
+
+// Problem 20
+// Write a JavaScript function that generates a string id (specified length) of random characters.
+
+
+function randomLetter(){
+    var val = 0;
+    while( !(val >= 48 &&  val <= 57) && !(val >= 65 &&  val <= 90) && !(val >= 97 &&  val <= 122) )
+        {
+            val = (Math.floor(Math.random() * 74)) + 48;
+        }
+    return val
+}
+
+function generateRanChar(len){
+    var result = "";
+    let val = 0;
+    for (var i = 0; i < len; i++)
+    {
+        result += String.fromCharCode( randomLetter() );
+    }
+    return result;
+}
+
+//console.log( generateRanChar(26) );
+
+// Problem 21
+// Write a JavaScript function to get all possible subset with a fixed length (for example 2) combinations in an array. 
+
+// function getSubset(array, subsetLength){
+//     var result = [];
+//     var arrTemp = [];    
+
+//     for(let i = 0; i < array.length; i++)
+//     {
+//         if(arrTemp)
+//     }
+//     return result;
+// }
+
+// console.log( getSubset([2, 8, 5, 6], 2) );
+
+
+// Problem 22
+// Write a JavaScript function that accepts two arguments, a string and a letter and the function will count the number of occurrences of the specified letter within the string.
+
+function numOccurenceLetter (str, letter)
+{
+    str = str.toLowerCase();
+    letter = letter.toLowerCase();
+
+    var count = 0;
+    for(var i = 0; i < str.length; i++)
+    {
+        if(str[i] === letter)
+            count++;
+    }
+    return count;
+}
+
+//console.log( numOccurenceLetter("www.microsoft.com", 'o') );
+
+
+// Problem 23
+// Write a JavaScript function to find the first not repeated character. 
+
+// function firstNonRepeatedChar (str)
+// {
+//     var obj = {};
+//     for(var i = 0; i < str.length; i++)
+//     {
+//         if( obj[str[i]] )
+//             obj[str[i]] += 1;
+//         else
+//             obj[str[i]] = 1;
+//     }
+
+//     for(let i in obj)
+//     {
+//         if(obj)
+//     }
+
+//     return obj;
+// }
+
+// console.log( firstNonRepeatedChar("abacddbec") );
