@@ -14,10 +14,20 @@
             method: "DELETE",
         });
 
+    const addTodo = (todo) =>
+        fetch([baseUrl, path].join("/"), {
+            method: "POST",
+            body: JSON.stringify(todo),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            },
+        })
+            .then((response) => response.json());
 
     return {
         getTodos,
         deleteTodo,
+        addTodo,
     };
 
     })();
@@ -29,10 +39,8 @@ const View = (() => {
     const selector = {
         todoUl: "#todolist",
         completed: "#completedlist",
-        delete: ".deletebtn",
-        arrowleft: ".arrowleftbtn",
-        arrowright: ".arrowrightbtn",
-        edit: ".editButton"
+        inputbox: ".input-box",
+        submit: ".submit",
     };
 
     const render = (element, template)=>{
@@ -101,19 +109,36 @@ const View = (() => {
 // ----------------------------------- MODEL -----------------------------------
 
 const Model = ((Api, View) => {
-    
+    let count = 0
+    class Todo {
+        constructor(content) {
+            this.content = content;
+            this.isCompleted = false;
+            this.id = count;
+            count++;
+        }
+    }
+
     class Todos {
         #todolist = [];
+        #notCompleted = [];
         #Completed = [];
+        #lastId = 0
 
         get todolist() {
             return this.#todolist;
         }
 
+        get lastId(){
+            return this.#lastId;
+        }
+
         set todolist(Todo)
         {
+            this.#todolist = [...Todo];
 
-            for(let i = 0; i < Todo.length; i++ )
+            //console.log(this.#todolist)
+            for(let i = 0; i < this.#todolist.length; i++ )
             {
                 if(Todo[i].isCompleted)
                 {
@@ -121,12 +146,14 @@ const Model = ((Api, View) => {
                     this.#Completed.push(Todo[i]);
                 }
                 else{
-                    this.#todolist.push(Todo[i]);
+                    this.#notCompleted.push(Todo[i]);
                 }
             }
+            count = (this.#todolist[this.#todolist.length - 1]).id + 1;
+            //console.log(this.#lastId);
 
             const container = document.querySelector(View.selector.todoUl);
-            const templ = View.createTemplateTodo(this.#todolist);
+            const templ = View.createTemplateTodo(this.#notCompleted);
             View.render(container, templ);
 
             const compContainer = document.querySelector(View.selector.completed);
@@ -143,11 +170,14 @@ const Model = ((Api, View) => {
 
     const getTodos = Api.getTodos;
     const deleteTodo = Api.deleteTodo;
+    const addTodo = Api.addTodo;
 
     return {
         Todos,
+        Todo,
         getTodos,
         deleteTodo,
+        addTodo,
         };
 })(Api, View);
 
@@ -158,17 +188,55 @@ const Controller = ((Model, View) => {
 
     const state = new Model.Todos();
 
+    const addTodo = () => {
+        const submit = document.querySelector(View.selector.submit);
+
+        submit.addEventListener("click", (event) => {
+            if(event.target.previousElementSibling.value !== "")
+            {
+                const newtodo = new Model.Todo(event.target.previousElementSibling.value);
+                Model.addTodo(newtodo).then((todo) => {
+                    location.reload();
+                });
+                event.target.previousElementSibling.value = "";
+            }
+            //console.log(event.target.previousElementSibling.value);
+            if (event.key === "Enter") {
+                
+                // Model.addTodo(newtodo).then((todo) => {
+                //     state.todolist = [todo, ...state.todolist];
+                // });
+                event.target.value = "";
+            }
+        });
+    };
+
     const deleteTodo = () => {
         const container = document.querySelector(View.selector.todoUl);
 
         container.addEventListener("click", (event) => {
-            state.todolist = state.todolist.filter(
-                (todo) => +todo.id !== +event.target.id
-            );
-            //Model.deleteTodo(event.target.id);
+            // state.todolist = state.todolist.filter(
+            //     (todo) => +todo.id !== +event.target.id
+            // );
+            // console.log(event)
+            // console.log(event.explicitOriginalTarget.className)
+            if(event.explicitOriginalTarget.className === "deletebtn")
+                Model.deleteTodo(event.target.id).then(() => location.reload());
         });
-        
+
+        const completedContainer = document.querySelector(View.selector.completed);
+
+        completedContainer.addEventListener("click", (event) => {
+            // state.todolist = state.todolist.filter(
+            //     (todo) => +todo.id !== +event.target.id
+            // );
+            
+            if(event.explicitOriginalTarget.className === "deletebtn")
+                Model.deleteTodo(event.target.id).then(() => location.reload());
+        });        
     };
+
+    
 
     const init = () => {
         Model.getTodos().then((todos) => {
@@ -181,6 +249,7 @@ const Controller = ((Model, View) => {
     const run = () => {
         init();
         deleteTodo();
+        addTodo();
     }
 
     return {
