@@ -265,7 +265,8 @@ const Controller = ((Model, View) => {
             if(event.explicitOriginalTarget.className === "arrowrightbtn")
             {
                 const content = state.todolistWithId(event.target.id);
-                const newtodo = new Model.Todo(content, true);
+                
+                const newtodo = new Model.TodoWithId(content, Number(event.target.id), true);
                 
                 Model.deleteTodo(event.target.id).then(() => {
                     Model.addTodo(newtodo).then((todo) => {
@@ -281,7 +282,7 @@ const Controller = ((Model, View) => {
             if(event.explicitOriginalTarget.className === "arrowleftbtn")
             {
                 const content = state.todolistWithId(event.target.id);
-                const newtodo = new Model.Todo(content, false);
+                const newtodo = new Model.TodoWithId(content, Number(event.target.id), false);
                 
                 Model.deleteTodo(event.target.id).then(() => {
                     Model.addTodo(newtodo).then((todo) => {
@@ -300,7 +301,7 @@ const Controller = ((Model, View) => {
             if(event.explicitOriginalTarget.className === "editbtn")
             {
                 const value = prompt("Enter new content");
-                const id = event.target.id;
+                const id = Number(event.target.id);
                 const isCompleted = state.statusWithId(event.target.id);
                 const newtodoWithStatus = new Model.TodoWithId(value, id, isCompleted);
 
@@ -320,7 +321,7 @@ const Controller = ((Model, View) => {
             if(event.explicitOriginalTarget.className === "editbtn")
             {
                 const value = prompt("Enter new content");
-                const id = event.target.id;
+                const id = Number(event.target.id);
                 const isCompleted = state.statusWithId(event.target.id);
                 const newtodoWithStatus = new Model.TodoWithId(value, id, isCompleted);
 
