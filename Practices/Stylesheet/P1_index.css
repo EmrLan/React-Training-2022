@@ -1,0 +1,99 @@
+:root {
+    --blue: #13a6f0;
+    --grey: #2d3134;
+    --orange: #ca9832;
+    --hoverColor: #879c75;
+    --headerHeight: 60px;
+    --todoHeaderHeight: 40px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Dancing Script', cursive;
+}
+
+.header {
+    background: linear-gradient(to right, var(--grey), var(--blue));
+    color: white;
+    padding: 10px;
+    text-align: center;
+    height: var(--headerHeight);
+    line-height: var(--headerHeight);
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+    
+
+.content {
+    padding: 10px;
+    width: 100%;
+    
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+}
+
+.select {
+    width: 70%;
+    text-align: center;
+    margin: 10px;
+}
+
+.todolist {
+    width: 70%;
+    text-align: center;
+    height: 400px;
+
+    border: 1px solid;
+    border-color: var(--blue);
+    
+}
+
+.todolist header{
+    background: linear-gradient(to right, var(--blue), var(--orange));
+    color: white;
+    height: var(--todoHeaderHeight);
+    line-height: var(--todoHeaderHeight);
+}
+
+.todolist div{
+    height: 100%;
+    overflow: auto;
+    height: 360px;
+}
+
+.todolist ul {
+    list-style: none;
+}
+
+.todolist ul li{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    height: 30px;
+}
+
+.todolist ul li:hover{
+    background-color: var(--hoverColor);
+    color: white;
+    font-size: larger;
+}
+
+.todolist ul li button{
+    border: none;
+    background: none;
+}
+
+.todolist ul li button:hover{
+    font-size: 1.6rem;
+    color: red;
+}
+
+.todolist ul li button:active{
+    font-size: 1.2rem;
+    color: red;
+}

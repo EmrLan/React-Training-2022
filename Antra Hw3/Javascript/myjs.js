@@ -517,7 +517,7 @@ function generateRanChar(len){
 //     return result;
 // }
 
-console.log( getSubset([1, 2, 3, 4], 3) );
+//console.log( getSubset([1, 2, 3, 4], 3) );
 
 
 // Problem 22
@@ -684,5 +684,38 @@ function getFuntionName (func)
 }
 
 //console.log( getFuntionName(longSubstring) );
+
+// EXTRA
+
+// const target = (a,b) => console.log(a + b);
+// //const target1 = (a,b,c) => console.log(a + b + c);
+
+// const fun = limitedFunction(3, target);
+
+// function limitedFunction(num, callback) {
+
+//     var counter = num;
+
+//     return function(...args) {
+//         if(counter > 0)
+//         {
+//             return callback(...args);
+//         }
+//         else
+//             console.log("Over limit!");
+//         counter--; 
+//     }
+// }
+
+
+// fun(1,7);
+// fun(2,7);
+// fun(3,7);
+// fun(5,7);
+// fun(7,7);
+// fun(8,7);
+// fun(9,7);
+// fun(0,7);
+
 
 
