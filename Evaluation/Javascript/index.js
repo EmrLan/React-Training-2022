@@ -77,11 +77,9 @@ const View = (() => {
         arr.forEach(todo => {
             template += `
                 <li>
-                    <div class="button-row">
-                        <button class="arrowleftbtn" id="${todo.id}">
+                    <button class="arrowleftbtn" id="${todo.id}">
                         <svg focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowBackIcon" aria-label="fontSize small"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
-                        </button>
-                    </div>
+                    </button>
                     <span>${todo.content}</span>
                     <div class="button-row">
                         <button class="editbtn" id="${todo.id}">
@@ -111,9 +109,9 @@ const View = (() => {
 const Model = ((Api, View) => {
     let count = 0
     class Todo {
-        constructor(content) {
+        constructor(content, status) {
             this.content = content;
-            this.isCompleted = false;
+            this.isCompleted = status;
             this.id = count;
             count++;
         }
@@ -160,10 +158,18 @@ const Model = ((Api, View) => {
             const compTempl = View.createTemplateComplete(this.#Completed);
             View.render(compContainer, compTempl);
         }
-
-        initTodo()
+        
+        todolistWithId(inputId)
         {
-            this.#todolist = [];
+           
+            for(let i in  this.#todolist)
+            {
+                if( (this.#todolist[i])["id"] === Number(inputId))
+                {
+                    return (this.#todolist[i])["content"];
+                }
+                
+            }
         }
 
     };
@@ -194,7 +200,7 @@ const Controller = ((Model, View) => {
         submit.addEventListener("click", (event) => {
             if(event.target.previousElementSibling.value !== "")
             {
-                const newtodo = new Model.Todo(event.target.previousElementSibling.value);
+                const newtodo = new Model.Todo(event.target.previousElementSibling.value, false);
                 Model.addTodo(newtodo).then((todo) => {
                     location.reload();
                 });
@@ -215,11 +221,6 @@ const Controller = ((Model, View) => {
         const container = document.querySelector(View.selector.todoUl);
 
         container.addEventListener("click", (event) => {
-            // state.todolist = state.todolist.filter(
-            //     (todo) => +todo.id !== +event.target.id
-            // );
-            // console.log(event)
-            // console.log(event.explicitOriginalTarget.className)
             if(event.explicitOriginalTarget.className === "deletebtn")
                 Model.deleteTodo(event.target.id).then(() => location.reload());
         });
@@ -227,22 +228,86 @@ const Controller = ((Model, View) => {
         const completedContainer = document.querySelector(View.selector.completed);
 
         completedContainer.addEventListener("click", (event) => {
-            // state.todolist = state.todolist.filter(
-            //     (todo) => +todo.id !== +event.target.id
-            // );
-            
+
             if(event.explicitOriginalTarget.className === "deletebtn")
                 Model.deleteTodo(event.target.id).then(() => location.reload());
         });        
     };
 
-    
+    //Handle arrow movements
+    const move = () => {
+        const container = document.querySelector(View.selector.todoUl);
+
+        container.addEventListener("click", (event) => {
+            if(event.explicitOriginalTarget.className === "arrowrightbtn")
+            {
+                const content = state.todolistWithId(event.target.id);
+                const newtodo = new Model.Todo(content, true);
+                
+                Model.deleteTodo(event.target.id).then(() => {
+                    Model.addTodo(newtodo).then((todo) => {
+                        location.reload();
+                    });
+                });
+            }
+        });
+
+        const completedContainer = document.querySelector(View.selector.completed);
+
+        completedContainer.addEventListener("click", (event) => {
+            if(event.explicitOriginalTarget.className === "arrowleftbtn")
+            {
+                const content = state.todolistWithId(event.target.id);
+                const newtodo = new Model.Todo(content, false);
+                
+                Model.deleteTodo(event.target.id).then(() => {
+                    Model.addTodo(newtodo).then((todo) => {
+                        location.reload();
+                    });
+                });
+            }
+        });
+    }
+
+    //handles update
+    // const edit = () => {
+    //     const container = document.querySelector(View.selector.todoUl);
+
+    //     container.addEventListener("click", (event) => {
+    //         if(event.explicitOriginalTarget.className === "arrowrightbtn")
+    //         {
+    //             const content = state.todolistWithId(event.target.id);
+    //             const newtodo = new Model.Todo(content, true);
+                
+    //             // Model.deleteTodo(event.target.id).then(() => {
+    //             //     Model.addTodo(newtodo).then((todo) => {
+    //             //         location.reload();
+    //             //     });
+    //             // });
+    //         }
+    //     });
+
+    //     const completedContainer = document.querySelector(View.selector.completed);
+
+    //     completedContainer.addEventListener("click", (event) => {
+    //         if(event.explicitOriginalTarget.className === "arrowleftbtn")
+    //         {
+    //             const content = state.todolistWithId(event.target.id);
+    //             const newtodo = new Model.Todo(content, false);
+                
+    //             // Model.deleteTodo(event.target.id).then(() => {
+    //             //     Model.addTodo(newtodo).then((todo) => {
+    //             //         location.reload();
+    //             //     });
+    //             // });
+    //         }
+    //     });
+    // }
 
     const init = () => {
         Model.getTodos().then((todos) => {
             state.todolist = todos;
         });
-
     };
 
 
@@ -250,6 +315,7 @@ const Controller = ((Model, View) => {
         init();
         deleteTodo();
         addTodo();
+        move();
     }
 
     return {
