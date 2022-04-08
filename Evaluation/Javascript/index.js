@@ -80,7 +80,8 @@ const View = (() => {
                     <button class="arrowleftbtn" id="${todo.id}">
                         <svg focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowBackIcon" aria-label="fontSize small"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
                     </button>
-                    <span>${todo.content}</span>
+
+                    <span class="span">${todo.content}</span>
                     <div class="button-row">
                         <button class="editbtn" id="${todo.id}">
                             <svg focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="EditIcon" aria-label="fontSize small"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>                                 
@@ -114,6 +115,14 @@ const Model = ((Api, View) => {
             this.isCompleted = status;
             this.id = count;
             count++;
+        }
+    }
+
+    class TodoWithId {
+        constructor(content, id , status) {
+            this.content = content;
+            this.isCompleted = status;
+            this.id = id;
         }
     }
 
@@ -172,6 +181,19 @@ const Model = ((Api, View) => {
             }
         }
 
+        statusWithId(inputId)
+        {
+           
+            for(let i in  this.#todolist)
+            {
+                if( (this.#todolist[i])["id"] === Number(inputId))
+                {
+                    return (this.#todolist[i])["isCompleted"];
+                }
+                
+            }
+        }
+
     };
 
     const getTodos = Api.getTodos;
@@ -181,6 +203,7 @@ const Model = ((Api, View) => {
     return {
         Todos,
         Todo,
+        TodoWithId,
         getTodos,
         deleteTodo,
         addTodo,
@@ -270,39 +293,47 @@ const Controller = ((Model, View) => {
     }
 
     //handles update
-    // const edit = () => {
-    //     const container = document.querySelector(View.selector.todoUl);
+    const edit = () => {
+        const container = document.querySelector(View.selector.todoUl);
 
-    //     container.addEventListener("click", (event) => {
-    //         if(event.explicitOriginalTarget.className === "arrowrightbtn")
-    //         {
-    //             const content = state.todolistWithId(event.target.id);
-    //             const newtodo = new Model.Todo(content, true);
+        container.addEventListener("click", (event) => {
+            if(event.explicitOriginalTarget.className === "editbtn")
+            {
+                const value = prompt("Enter new content");
+                const id = event.target.id;
+                const isCompleted = state.statusWithId(event.target.id);
+                const newtodoWithStatus = new Model.TodoWithId(value, id, isCompleted);
+
+                //console.log("output: " + value + " " + id + " " + isCompleted)
                 
-    //             // Model.deleteTodo(event.target.id).then(() => {
-    //             //     Model.addTodo(newtodo).then((todo) => {
-    //             //         location.reload();
-    //             //     });
-    //             // });
-    //         }
-    //     });
+                Model.deleteTodo(event.target.id).then(() => {
+                    Model.addTodo(newtodoWithStatus).then((todo) => {
+                        location.reload();
+                    });
+                });
+            }
+        });
 
-    //     const completedContainer = document.querySelector(View.selector.completed);
+        const completedContainer = document.querySelector(View.selector.completed);
 
-    //     completedContainer.addEventListener("click", (event) => {
-    //         if(event.explicitOriginalTarget.className === "arrowleftbtn")
-    //         {
-    //             const content = state.todolistWithId(event.target.id);
-    //             const newtodo = new Model.Todo(content, false);
+        completedContainer.addEventListener("click", (event) => {
+            if(event.explicitOriginalTarget.className === "editbtn")
+            {
+                const value = prompt("Enter new content");
+                const id = event.target.id;
+                const isCompleted = state.statusWithId(event.target.id);
+                const newtodoWithStatus = new Model.TodoWithId(value, id, isCompleted);
+
+                //console.log("output: " + value + " " + id + " " + isCompleted)
                 
-    //             // Model.deleteTodo(event.target.id).then(() => {
-    //             //     Model.addTodo(newtodo).then((todo) => {
-    //             //         location.reload();
-    //             //     });
-    //             // });
-    //         }
-    //     });
-    // }
+                Model.deleteTodo(event.target.id).then(() => {
+                    Model.addTodo(newtodoWithStatus).then((todo) => {
+                        location.reload();
+                    });
+                });
+            }
+        });
+    }
 
     const init = () => {
         Model.getTodos().then((todos) => {
@@ -316,6 +347,7 @@ const Controller = ((Model, View) => {
         deleteTodo();
         addTodo();
         move();
+        edit();
     }
 
     return {

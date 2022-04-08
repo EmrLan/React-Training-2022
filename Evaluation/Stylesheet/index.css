@@ -78,7 +78,7 @@
     font-size: larger;
 }
 
-.todolist ul li button{
+.deletebtn, .editbtn, .arrowrightbtn,.arrowleftbtn{
     height: 30px;
     width: 20px;
 }
@@ -96,4 +96,8 @@
 
 svg{
     pointer-events: none;
+}
+
+span{
+    overflow: auto;
 }
