@@ -243,9 +243,12 @@ const Controller = ((Model, View) => {
     const deleteTodo = () => {
         const container = document.querySelector(View.selector.todoUl);
 
+        
+
         container.addEventListener("click", (event) => {
+            console.log(event);
             if(event.explicitOriginalTarget.className === "deletebtn")
-                Model.deleteTodo(event.target.id).then(() => location.reload());
+                Model.deleteTodo(event.target.id);//.then(() => location.reload());
         });
 
         const completedContainer = document.querySelector(View.selector.completed);
