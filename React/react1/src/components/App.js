@@ -1,9 +1,9 @@
 import React from "react";
-import Decrement from "./decrement";
-import Increment from "./increment";
-import "./css/home.css";
+import Decrement from "./Decrement";
+import Increment from "./Increment";
+import "./css/App.css";
 
-class Home extends React.Component {
+class App extends React.Component {
   constructor() {
     super();
     this.state = {number: 0};
@@ -33,4 +33,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default App;
