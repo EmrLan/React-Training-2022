@@ -69,7 +69,7 @@ class Container extends React.Component{
         const next = {...prev};
         next.todolist = [...prev.todolist];
         next.todolist = next.todolist.filter((todo, index) => {
-          return todo.id !== Number(event.target.id);
+          return String(todo.id) !== String(event.target.id);
         });
         return next;
       })
