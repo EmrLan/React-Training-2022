@@ -30,6 +30,7 @@ const Api = (() => {
   return {
       getTodos,
       deleteTodo,
+      addTodo,
   };
 
 })();
@@ -45,7 +46,8 @@ class Todo {
 class Container extends React.Component{
 
   state = {
-    todolist: []
+    todolist: [],
+    value: ""
   };
 
   componentDidMount() {
@@ -75,7 +77,26 @@ class Container extends React.Component{
   }
 
   addTodoToList = (event) => {
-    console.log(event);
+    event.preventDefault();
+    const newTodo = new Todo(this.state.value)
+    Api.addTodo(newTodo)
+      .then((todo)=> {
+        this.setState((prev) => {
+          const next = {...prev};
+          next.todolist = [...prev.todolist]
+          next.todolist = [todo,...next.todolist];
+          return next;
+        });
+      })
+  }
+
+  onValueChange = (event) => {
+    this.setState(prev => {
+      const next = {...prev};
+      next.value = [...prev.value]
+      next.value = event.target.value;
+      return next;
+    })
   }
 
 
@@ -83,7 +104,7 @@ class Container extends React.Component{
     return (
       <div className='container'>
         <header>
-          <Form addTodo={this.addTodoToList}/>
+          <Form addTodo={this.addTodoToList} onChange={this.onValueChange}/>
         </header>
         <main>
           <List list={this.state} deleteFun={this.deleteTodoFromList}/>
