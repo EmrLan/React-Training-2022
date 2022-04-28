@@ -79,15 +79,18 @@ class Container extends React.Component{
   addTodoToList = (event) => {
     event.preventDefault();
     const newTodo = new Todo(this.state.value)
-    Api.addTodo(newTodo)
-      .then((todo)=> {
-        this.setState((prev) => {
-          const next = {...prev};
-          next.todolist = [...prev.todolist]
-          next.todolist = [todo,...next.todolist];
-          return next;
-        });
-      })
+    if(this.state.value.length > 0)
+      Api.addTodo(newTodo)
+        .then((todo)=> {
+          this.setState((prev) => {
+            const next = {...prev};
+            next.todolist = [...prev.todolist]
+            next.todolist = [todo,...next.todolist];
+            return next;
+          });
+        })
+    else
+        window.alert("Type a todo list")
   }
 
   onValueChange = (event) => {
