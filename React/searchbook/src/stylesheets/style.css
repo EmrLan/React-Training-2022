@@ -1,0 +1,7 @@
+.nonClickable {
+    pointer-events: none;
+}
+
+.searchBox {
+    width: 100%;
+}

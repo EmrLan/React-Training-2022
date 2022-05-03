@@ -86,11 +86,17 @@ class Container extends React.Component{
             const next = {...prev};
             next.todolist = [...prev.todolist]
             next.todolist = [todo,...next.todolist];
+            next.value = "";
             return next;
           });
         })
     else
         window.alert("Type a todo list")
+  }
+
+  onKeyDown = (event) => {
+    if(event.key === "Enter")
+      this.addTodoToList(event);
   }
 
   onValueChange = (event) => {
@@ -107,7 +113,7 @@ class Container extends React.Component{
     return (
       <div className='container'>
         <header>
-          <Form addTodo={this.addTodoToList} onChange={this.onValueChange}/>
+          <Form addTodo={this.addTodoToList} keyDown={this.onKeyDown} value={this.state.value} onChange={this.onValueChange}/>
         </header>
         <main>
           <List list={this.state} deleteFun={this.deleteTodoFromList}/>

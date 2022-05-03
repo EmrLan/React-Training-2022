@@ -64,6 +64,7 @@ main {
     background: linear-gradient(to right, var(--greyVal), var(--greenVal));
     color: white;
     border: 1px solid black;
+    border-radius: 5px;
     padding: 20px;
     height: 600px;
 }

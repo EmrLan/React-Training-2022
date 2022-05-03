@@ -6,7 +6,7 @@ class Form extends React.Component{
         return(
             <>
                 <div >
-                    <input onChange={this.props.onChange} type="text" placeholder="Add to todo list"/>
+                    <input onChange={this.props.onChange} onKeyDown={this.props.keyDown} value={this.props.value} type="text" placeholder="Add to todo list"/>
                     <button onClick={this.props.addTodo}>Add</button>
                 </div>
             </>
