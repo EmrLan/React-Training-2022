@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import BookCard from "../Book/BookCard";
 import Pagination from "./Pagination";
+import uuid from "react-uuid";
 
 function Booklist(props) {
   return (
@@ -8,7 +9,7 @@ function Booklist(props) {
       {props.booklist !== undefined ? (
         props.booklist.map((book) => {
           return (
-            <Grid key={book.id} item xs={12}>
+            <Grid key={uuid()} item xs={12}>
               <BookCard book={book} onSelection={props.onSelection} />
             </Grid>
           );

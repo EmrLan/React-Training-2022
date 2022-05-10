@@ -5,3 +5,14 @@
 .searchBox {
     width: 100%;
 }
+
+.Card {
+    width: inherit;
+    position: absolute;
+    z-index:1;
+    
+}
+
+.grid {
+    width: 900px;
+}

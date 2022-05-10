@@ -3,11 +3,22 @@ import {
   Card,
   CardActionArea,
   CardMedia,
+  createStyles,
   Grid,
   Typography,
 } from "@mui/material";
+// import { makeStyles } from '@mui/material/styles';
+
+// const useStyles = makeStyles(() => 
+// createStyles({
+//   nonClickable: {
+//     PointerEvent: 'none',
+//   },
+// }));
 
 function BookCard(props) {
+  // const classes = useStyles();
+  
   return (
     <Card variant="outlined">
       <CardActionArea id={props.book.id} onClick={props.onSelection}>

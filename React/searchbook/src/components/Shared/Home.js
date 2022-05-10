@@ -41,6 +41,10 @@ function Home() {
       if (result?.data?.totalItems) {
         setTotalpages( Math.ceil( result.data.totalItems / itemsPerPage));
       }
+      
+    });
+    result.finally(()=>{
+      setValue("");
     });
   }, [value,currentPage]);
 

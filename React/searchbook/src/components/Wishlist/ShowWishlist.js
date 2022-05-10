@@ -1,5 +1,6 @@
 import { Card, Grid, Typography } from "@mui/material";
 import WishlistCard from "../Shared/WishlistCard";
+import uuid from "react-uuid";
 
 function ShowWishlist(props) {
   return (
@@ -9,7 +10,7 @@ function ShowWishlist(props) {
           {props.wishlist.length > 0 ? (
             props.wishlist.map((book) => {
               return (
-                <Grid key={book.id} item xs={12}>
+                <Grid key={uuid} item xs={12}>
                   <WishlistCard book={book} view={props.view} />
                 </Grid>
               );
