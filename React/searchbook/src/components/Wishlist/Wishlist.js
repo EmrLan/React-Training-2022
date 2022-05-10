@@ -1,7 +1,7 @@
 import { Button, Card, Container, Grid, Typography } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
-import WishlistCard from "./WishlistCard";
+import WishlistCard from "../Shared/WishlistCard";
 
 function Wishlist(props) {
   return (
@@ -20,7 +20,7 @@ function Wishlist(props) {
                 <Grid key={book.id} item xs={12}>
                   <WishlistCard
                     book={book}
-                    page={props.page}
+                    view={props.view}
                     onDelete={props.onDelete}
                   />
                 </Grid>

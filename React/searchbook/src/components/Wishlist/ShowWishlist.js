@@ -1,7 +1,7 @@
 import { Card, Grid, Typography } from "@mui/material";
-import WishlistCard from "./WishlistCard";
+import WishlistCard from "../Shared/WishlistCard";
 
-function ShowlistPage(props) {
+function ShowWishlist(props) {
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -10,7 +10,7 @@ function ShowlistPage(props) {
             props.wishlist.map((book) => {
               return (
                 <Grid key={book.id} item xs={12}>
-                  <WishlistCard book={book} page={props.page} />
+                  <WishlistCard book={book} view={props.view} />
                 </Grid>
               );
             })
@@ -23,4 +23,4 @@ function ShowlistPage(props) {
   );
 }
 
-export default ShowlistPage;
+export default ShowWishlist;

@@ -1,5 +1,6 @@
 import { Grid } from "@mui/material";
-import BookCard from "./BookCard";
+import BookCard from "../Book/BookCard";
+import Pagination from "./Pagination";
 
 function Booklist(props) {
   return (
@@ -14,6 +15,18 @@ function Booklist(props) {
         })
       ) : (
         <div></div>
+      )}
+
+      {props.totalPages > 1 ? (
+        <Grid item xs={12}>
+          <Pagination
+            currentPage={props.currentPage}
+            totalPages={props.totalPages}
+            setCurrentPage={props.setCurrentPage}
+          />
+        </Grid>
+      ) : (
+        <></>
       )}
     </Grid>
   );

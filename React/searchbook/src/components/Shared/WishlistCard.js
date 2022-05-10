@@ -6,7 +6,12 @@ function WishlistCard(props) {
   return (
     <Card variant="outlined">
       <Grid container>
-        {props.page === 0 ? (
+        <Grid item xs={10}>
+          <Typography component="span">
+            {props.book.volumeInfo.title}
+          </Typography>
+        </Grid>
+        {props.view === 0 ? (
           <Grid item xs={2}>
             <Button id={props.book.id} onClick={props.onDelete}>
               <ClearIcon className="nonClickable" />
@@ -15,11 +20,6 @@ function WishlistCard(props) {
         ) : (
           <></>
         )}
-        <Grid item xs={10}>
-          <Typography component="span">
-            {props.book.volumeInfo.title}
-          </Typography>
-        </Grid>
       </Grid>
     </Card>
   );

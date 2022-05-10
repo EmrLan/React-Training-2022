@@ -13,11 +13,13 @@ function BookCard(props) {
       <CardActionArea id={props.book.id} onClick={props.onSelection}>
         <Grid className="nonClickable" container spacing={2}>
           <Grid item xs={2}>
-            <CardMedia
-              component="img"
-              src={props.book.volumeInfo.imageLinks.thumbnail}
-              alt={props.book.volumeInfo.title}
-            />
+            {props?.book?.volumeInfo?.imageLinks?.thumbnail?(
+               <CardMedia
+               component="img"
+               src={props.book.volumeInfo.imageLinks.thumbnail}
+               alt={props.book.volumeInfo.title}
+             />
+            ):(<></>)}
           </Grid>
           <Grid item xs={10}>
             <Typography variant="h5">
